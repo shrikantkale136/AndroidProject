@@ -3,6 +3,7 @@ package com.cis.project.views.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cis.project.R
 import com.cis.project.views.authentication.LoginActivity
@@ -34,6 +35,7 @@ class DashboardActivity : AppCompatActivity() {
             auth.signOut()
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            Toast.makeText(this,"Logout Successfully", Toast.LENGTH_SHORT)
         }
 
         var email=intent.getStringExtra("email")

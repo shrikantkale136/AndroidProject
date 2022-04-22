@@ -60,26 +60,29 @@ class CreateNotes : Fragment() {
                     .addOnFailureListener {
                         Log.d("Error to insert note into db  ========> ", note)
                     }
-
-                //retrieve data from firebase db
-                /*userDocument.collection("notes")
-                        .get()
-                        .addOnSuccessListener { document ->
-                            if (document != null) {
-                                Log.d("Database value ========> ", "Notes ${document.query}")
-                            }
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w(
-                                "Network Error",
-                                "Error writing document",
-                                e
-                            )
-                        }*/
-
             }
 
         }
+
+        readData()
+    }
+
+    private fun readData() {
+        //retrieve data from firebase db
+        /*userDocument.collection("notes")
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        Log.d("Database value ========> ", "Notes ${document.query}")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w(
+                        "Network Error",
+                        "Error writing document",
+                        e
+                    )
+                }*/
     }
 
 
