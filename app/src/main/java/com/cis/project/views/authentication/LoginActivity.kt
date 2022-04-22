@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.cis.project.MainActivity
 import com.cis.project.R
+import com.cis.project.views.dashboard.DashboardActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this){
                             task ->
                         if (task.isSuccessful){
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, DashboardActivity::class.java)
                             intent.putExtra("email",email)
                             startActivity(intent)
                             Toast.makeText(this,"Login SuccessFul !", Toast.LENGTH_SHORT).show()
