@@ -27,6 +27,11 @@ class RegisterActivity : AppCompatActivity() {
             createAccout(uemail, upassword)
         }
 
+        LoginButton.setOnClickListener(){
+            val intent= Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun createAccout(email: String, password: String) {

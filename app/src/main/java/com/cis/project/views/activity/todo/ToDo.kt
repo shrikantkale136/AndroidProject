@@ -49,7 +49,7 @@ class ToDo : Fragment() {
     }
 
     private fun readList() {
-        toDoList = arrayListOf()
+        val toDoArrayList =  ArrayList<String>()
         db.collection("USERS").document(userEmail).collection("todo")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -59,10 +59,20 @@ class ToDo : Fragment() {
                         "Read document with ID ${document.id} - ${document["todoItem"]}"
                     )
                     //notesList.add(document["Note"])
+                    if(document["Note"] != null) {
+                        toDoArrayList.add("${document["todoItem"]}")
+
+                    }
                 }
+                textViewdata.text = toDoArrayList.toString()
+                Log.d("ArrayList => ", toDoArrayList.size.toString())
             }
             .addOnFailureListener { exception ->
                 Log.w("store error ==>", "Error getting documents $exception")
             }
+
+        for (i in toDoArrayList) {
+            println(i)
+        }
     }
 }

@@ -85,7 +85,7 @@ class Notes : Fragment() {
     }
 
     private fun readData() {
-        notesList = arrayListOf()
+        var notesList = arrayListOf<String>()
         db.collection("USERS").document(userEmail).collection("notes")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -94,8 +94,9 @@ class Notes : Fragment() {
                         "store db ==> ",
                         "Read document with ID ${document.id} - ${document["Note"]}"
                     )
-                    //notesList.add(document["Note"])
+//                    notesList.add(document["Note"])
                 }
+                Log.d("NotesList", notesList.toString())
             }
             .addOnFailureListener { exception ->
                 Log.w("store error ==>", "Error getting documents $exception")
@@ -104,6 +105,6 @@ class Notes : Fragment() {
 
     private fun updateData() {
         //to update
-        //db.collection("USERS").document(userEmail).update("notes", notes)
+       // db.collection("USERS").document(userEmail).update("notes", notes)
     }
 }
