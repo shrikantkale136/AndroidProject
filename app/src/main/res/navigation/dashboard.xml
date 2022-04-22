@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/dashboardMenu">
+
+    <navigation android:id="@+id/notesNavigation"
+        app:startDestination="@id/notes">
+        <fragment
+            android:id="@+id/notes"
+            android:name="com.cis.project.views.activity.notes.Notes"
+            android:label="fragment_notes"
+            tools:layout="@layout/fragment_notes" >
+            <action
+                android:id="@+id/action_notes_to_createNotes"
+                app:destination="@id/createNotes" />
+        </fragment>
+        <fragment
+            android:id="@+id/createNotes"
+            android:name="com.cis.project.views.activity.notes.CreateNotes"
+            android:label="fragment_create_notes"
+            tools:layout="@layout/fragment_create_notes" >
+            <action
+                android:id="@+id/action_createNotes_to_notes"
+                app:destination="@id/notes" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_dashboardMenu"
+            app:destination="@id/dashboardMenu" />
+    </navigation>
+    <navigation android:id="@+id/todoNavigation"
+        app:startDestination="@id/toDo">
+        <fragment
+            android:id="@+id/toDo"
+            android:name="com.cis.project.views.activity.todo.ToDo"
+            android:label="fragment_to_do"
+            tools:layout="@layout/fragment_to_do" >
+            <action
+                android:id="@+id/action_toDo_to_createList"
+                app:destination="@id/createList" />
+        </fragment>
+        <fragment
+            android:id="@+id/createList"
+            android:name="com.cis.project.views.activity.todo.CreateList"
+            android:label="fragment_create_list"
+            tools:layout="@layout/fragment_create_list" >
+            <action
+                android:id="@+id/action_createList_to_toDo"
+                app:destination="@id/toDo" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_dashboardMenu"
+            app:destination="@id/dashboardMenu" />
+    </navigation>
+    <fragment
+        android:id="@+id/dashboardMenu"
+        android:name="com.cis.project.views.dashboard.DashboardMenu"
+        android:label="fragment_dashboard_menu"
+        tools:layout="@layout/fragment_dashboard_menu" >
+        <action
+            android:id="@+id/action_dashboardMenu_to_todoNavigation"
+            app:destination="@id/todoNavigation" />
+        <action
+            android:id="@+id/action_dashboardMenu_to_notesNavigation"
+            app:destination="@id/notesNavigation" />
+    </fragment>
+</navigation>

@@ -24,6 +24,13 @@ class DashboardActivity : AppCompatActivity() {
         val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
         val isLogin=sharedPref.getString("Email","1")
 
+        logoutButton.setOnClickListener() {
+            sharedPref.edit().remove("Email").apply()
+            auth.signOut()
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         if(isLogin=="1")
         {
             var email=intent.getStringExtra("email")
@@ -46,6 +53,7 @@ class DashboardActivity : AppCompatActivity() {
         {
             setText(isLogin)
         }
+
     }
 
     private fun setText(email:String?)
@@ -55,7 +63,8 @@ class DashboardActivity : AppCompatActivity() {
             db.collection("USERS").document(email).get()
                 .addOnSuccessListener {
                         tasks->
-                    userName.text = userName.text.toString().plus(tasks.get("Name").toString())
+                        var name = userName.text.toString().plus(tasks.get("Name").toString())
+                        userName.text = "Welcome $name"
                 }
         }
 

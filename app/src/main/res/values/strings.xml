@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Project</string>
     <string name="notes">Notes</string>
+    <string name="todoTitle">"Notes "</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to_my_app">Welcome To My APP</string>
+    <string name="cis_project_application">CIS Project Application</string>
 </resources>

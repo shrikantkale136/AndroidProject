@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
         <activity
+            android:name=".views.activity.NotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activity.ToDoActivity"
             android:exported="false" />
         <activity
