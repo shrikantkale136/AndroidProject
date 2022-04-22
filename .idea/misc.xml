@@ -7,14 +7,17 @@
         <entry key="app/src/main/res/drawable/ic_launcher_notes_foreground.xml" value="0.1295" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_notes.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/activity_to_do.xml" value="0.2572463768115942" />
         <entry key="app/src/main/res/layout/fragment_create_list.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/fragment_create_notes.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/fragment_dashboard_menu.xml" value="0.2953125" />
-        <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.21003134796238246" />
+        <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_to_do.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/recycler_view_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/rv_layout.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1555" />
       </map>
     </option>

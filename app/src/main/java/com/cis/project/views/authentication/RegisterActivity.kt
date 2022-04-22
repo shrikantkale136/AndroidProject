@@ -20,6 +20,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+
         registeruserBtn.setOnClickListener {
             var uemail = Email.text.toString()
             var upassword = Password.text.toString()
@@ -38,6 +39,7 @@ class RegisterActivity : AppCompatActivity() {
                 "Name" to name,
                 "Email" to email,
                 "Phone" to phone
+
             )
 
             val users = db.collection("USERS")
@@ -51,6 +53,8 @@ class RegisterActivity : AppCompatActivity() {
                                     task->
                                 if(task.isSuccessful)
                                 {
+                                    Log.d("SUCCESS", "User created successfully !")
+                                    Toast.makeText(this, "Register Successful !!", Toast.LENGTH_SHORT).show()
                                     users.document(email).set(user)
                                     val intent= Intent(this,LoginActivity::class.java)
                                     intent.putExtra("email",email)
@@ -77,24 +81,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-
-    private fun registerUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d("SUCCESS", "User created successfully !")
-                    Toast.makeText(this, "Register Successful !!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    Toast.makeText(this, "Invalid details !!", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-    }
-
     private fun validateUserDetails(): Boolean {
         if (Name.text.toString().trim { it <= ' ' }.isNotEmpty() &&
             PhoneNumber.text.toString().trim { it <= ' ' }.isNotEmpty() &&
@@ -106,7 +92,4 @@ class RegisterActivity : AppCompatActivity() {
         return false
     }
 
-    private fun updateUI(user: FirebaseUser?) {
-        Log.d("User:", "" + user)
-    }
 }

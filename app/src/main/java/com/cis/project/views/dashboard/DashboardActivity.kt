@@ -1,15 +1,15 @@
 package com.cis.project.views.dashboard
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.cis.project.R
 import com.cis.project.views.authentication.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_dashboard.*
+
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -21,38 +21,32 @@ class DashboardActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         Log.i("CurrentUser: "," - "+auth.currentUser?.email)
-        val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
-        val isLogin=sharedPref.getString("Email","1")
+        val currentUser=auth.currentUser?.email
 
+        // retrieve user email from session using sharedPreference
+        val sharedPref = getSharedPreferences("userData", MODE_PRIVATE)
+        val sessionData = sharedPref.edit()
+        sessionData.putString("email", currentUser).commit()
+
+        //logout
         logoutButton.setOnClickListener() {
-            sharedPref.edit().remove("Email").apply()
+            sessionData.clear().commit()
             auth.signOut()
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        if(isLogin=="1")
+        var email=intent.getStringExtra("email")
+        if(email!=null)
         {
-            var email=intent.getStringExtra("email")
-            if(email!=null)
-            {
-                setText(email)
-                with(sharedPref.edit())
-                {
-                    putString("Email",email)
-                    apply()
-                }
-            }
-            else{
-                var intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            setText(email)
         }
-        else
-        {
-            setText(isLogin)
+        else{
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
+
 
     }
 

@@ -59,9 +59,14 @@
         tools:layout="@layout/fragment_dashboard_menu" >
         <action
             android:id="@+id/action_dashboardMenu_to_todoNavigation"
-            app:destination="@id/todoNavigation" />
+            app:destination="@id/todoNavigation"
+            app:enterAnim="@anim/nav_default_enter_anim" />
         <action
             android:id="@+id/action_dashboardMenu_to_notesNavigation"
-            app:destination="@id/notesNavigation" />
+            app:destination="@id/notesNavigation"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="userEmail"
+            app:argType="string" />
     </fragment>
 </navigation>
