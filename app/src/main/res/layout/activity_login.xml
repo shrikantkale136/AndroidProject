@@ -61,7 +61,7 @@
         android:drawableStart="@android:drawable/ic_lock_idle_lock"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Please password"
+        android:hint="Enter password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
