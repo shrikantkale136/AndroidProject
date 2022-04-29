@@ -81,6 +81,7 @@ class Notes : Fragment() {
                 for (dc:DocumentChange in value?. documentChanges!!) {
                     if (dc.type == DocumentChange.Type.ADDED) {
                         notesList.add(dc.document.toObject(NotesDataClass::class.java))
+
                     }
                 }
                 notesAdapter.notifyDataSetChanged()
