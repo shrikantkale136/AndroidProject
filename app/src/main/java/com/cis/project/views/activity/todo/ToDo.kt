@@ -8,17 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cis.project.R
 import com.cis.project.views.utility.recyclerView.NotesDataClass
+import com.cis.project.views.utility.recyclerView.ToDoAdapter
 import com.cis.project.views.utility.recyclerView.ToDoDataClass
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_notes.*
 import kotlinx.android.synthetic.main.fragment_to_do.*
 
 class ToDo : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var userEmail: String
+
+    private lateinit var recyclerView: RecyclerView
     private lateinit var toDoList: ArrayList<ToDoDataClass>
+    private lateinit var todoAdapter: ToDoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +36,6 @@ class ToDo : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        db = FirebaseFirestore.getInstance()
 
         // retrieve user email from session using sharedPreference
         val preferences = this.requireActivity().getSharedPreferences("userData", Context.MODE_PRIVATE)
@@ -45,11 +50,40 @@ class ToDo : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_toDo_to_createList)
         }
 
-        readList()
+        //readList()
+
+        ToDoRecyclerView.layoutManager = LinearLayoutManager(context)
+        ToDoRecyclerView.setHasFixedSize(true)
+        toDoList = arrayListOf()
+        todoAdapter = ToDoAdapter(toDoList)
+        ToDoRecyclerView.adapter = todoAdapter
+        readDataOnView()
+    }
+
+    private fun readDataOnView() {
+        db = FirebaseFirestore.getInstance()
+        db.collection("USERS").document(userEmail).collection("todo").
+            addSnapshotListener(object: EventListener<QuerySnapshot> {
+            override fun onEvent(
+                value: QuerySnapshot?,
+                error: FirebaseFirestoreException?
+            ) {
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
+                    return
+                }
+                for (dc:DocumentChange in value?. documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
+                        toDoList.add(dc.document.toObject(ToDoDataClass::class.java))
+                    }
+                }
+                todoAdapter.notifyDataSetChanged()
+            }
+        })
     }
 
     private fun readList() {
-        val toDoArrayList =  ArrayList<String>()
+        val toDoArrayList =  ArrayList<ToDoDataClass>()
         db.collection("USERS").document(userEmail).collection("todo")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -59,12 +93,14 @@ class ToDo : Fragment() {
                         "Read document with ID ${document.id} - ${document["todoItem"]}"
                     )
                     //notesList.add(document["Note"])
+
+                   // document.toObject(ToDoDataClass)
                     if(document["Note"] != null) {
-                        toDoArrayList.add("${document["todoItem"]}")
+                        //oDoArrayList.add("${document["todoItem"]}")
 
                     }
                 }
-                textViewdata.text = toDoArrayList.toString()
+                //textViewdata.text = toDoArrayList.toString()
                 Log.d("ArrayList => ", toDoArrayList.size.toString())
             }
             .addOnFailureListener { exception ->

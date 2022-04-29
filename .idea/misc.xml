@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/layout/fragment_to_do.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/recycler_view_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/rv_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/rv_todollayout.xml" value="0.30092592592592593" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1555" />
       </map>
     </option>
