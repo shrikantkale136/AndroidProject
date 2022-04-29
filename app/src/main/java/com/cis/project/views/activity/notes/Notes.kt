@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cis.project.R
 import com.cis.project.views.utility.recyclerView.NotesAdapter
 import com.cis.project.views.utility.recyclerView.NotesDataClass
+import com.cis.project.views.utility.recyclerView.ToDoAdapter
+import com.cis.project.views.utility.recyclerView.ToDoDataClass
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_notes.*
+import kotlinx.android.synthetic.main.fragment_to_do.*
 
 class Notes : Fragment() {
     private lateinit var db: FirebaseFirestore
@@ -32,7 +35,6 @@ class Notes : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        db = FirebaseFirestore.getInstance()
 
         // retrieve user email from session using sharedPreference
         val preferences = this.requireActivity().getSharedPreferences("userData", Context.MODE_PRIVATE)
@@ -49,17 +51,41 @@ class Notes : Fragment() {
 
         // Recycler view code
         notesRecyclerView.layoutManager = LinearLayoutManager(context)
-        val notesArray = resources.getStringArray(R.array.Note)
+        notesRecyclerView.setHasFixedSize(true)
         notesList = arrayListOf()
-        for (i in notesArray.indices) {
-            notesList.add(NotesDataClass(notesArray[i]))
-            Log.d("Arrayitem ", notesArray[i])
-        }
-
         notesAdapter = NotesAdapter(notesList)
         notesRecyclerView.adapter = notesAdapter
+        readNotesDataOnView()
+        //val notesArray = resources.getStringArray(R.array.Note)
+
+//        for (i in notesArray.indices) {
+//            notesList.add(NotesDataClass(notesArray[i]))
+//            Log.d("Arrayitem ", notesArray[i])
+//        }
+//        readData()
         //eventChangeListener()
-        readData()
+    }
+
+    private fun readNotesDataOnView() {
+        db = FirebaseFirestore.getInstance()
+        db.collection("USERS").document(userEmail).collection("notes").
+        addSnapshotListener(object: EventListener<QuerySnapshot> {
+            override fun onEvent(
+                value: QuerySnapshot?,
+                error: FirebaseFirestoreException?
+            ) {
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
+                    return
+                }
+                for (dc:DocumentChange in value?. documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
+                        notesList.add(dc.document.toObject(NotesDataClass::class.java))
+                    }
+                }
+                notesAdapter.notifyDataSetChanged()
+            }
+        })
     }
 
     private fun eventChangeListener() {

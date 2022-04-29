@@ -22,7 +22,6 @@ class ToDo : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var userEmail: String
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var toDoList: ArrayList<ToDoDataClass>
     private lateinit var todoAdapter: ToDoAdapter
 
@@ -111,4 +110,5 @@ class ToDo : Fragment() {
             println(i)
         }
     }
+
 }
